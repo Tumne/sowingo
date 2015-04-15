@@ -1,0 +1,56 @@
+<ion-view view-title="Sterilization Compliance: Chemical Testing">
+<!-- <ion-view> -->
+    <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left ion-location nav-button-height" ng-click="openModal()">
+        &nbsp;&nbsp;<b>{{currentAddress || 'No office provided'}}</b>
+      </button>
+
+      <button class="button button-positive nav-button-height" ng-click="logout()">
+          Sign Out
+      </button>
+  </ion-nav-buttons>
+  <ion-content class="height-header background-balanced">
+    
+    <div class="row">
+      <div class="col col-50">
+        <button class="button button-calm icon-left ion-plus-circled" ui-sref="tab.chemtest-detail({dataId:''})">
+              &nbsp;&nbsp;Add Chemical Test
+        </button>
+      </div>
+    </div>
+
+    <div class="list card">
+      <ion-list>
+        <ion-item class="item-remove-animate item-avatar item-icon-right item-header">
+          <div class="row">
+            <div class="col text-center"><a ng-click="reorder('test_date')">Date/Time 
+              <span ng-show="(predicate=='test_date' && reverse)"><i class="ion-arrow-down-b"></i></span>
+              <span ng-show="(predicate=='test_date' && !reverse)"><i class="ion-arrow-up-b"></i></span>
+            </a></div>
+            <div class="col text-center"><a ng-click="reorder('tester_name')">Tester
+              <span ng-show="(predicate=='tester_id' && reverse)"><i class="ion-arrow-down-b"></i></span>
+              <span ng-show="(predicate=='tester_id' && !reverse)"><i class="ion-arrow-up-b"></i></span>
+            </a></div>
+            <div class="col text-center"><a ng-click="reorder('result')">Result
+              <span ng-show="(predicate=='result' && reverse)"><i class="ion-arrow-down-b"></i></span>
+              <span ng-show="(predicate=='result' && !reverse)"><i class="ion-arrow-up-b"></i></span>
+            </a></div>
+          </div>
+        </ion-item>
+        <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="record in records | orderBy:predicate:reverse | filter:{type:'chem_test'}" type="item-text-wrap" ui-sref="tab.chemtest-detail({dataId: record.id})">
+          <div class="row">
+            <div class="col text-center" ui-sref="tab.chemtest-detail({dataId: record.id})">{{record.test_date}}&nbsp;&nbsp;&nbsp;{{record.test_time}}</div>
+            <div class="col text-center" ui-sref="tab.chemtest-detail({dataId: record.id})">{{record.tester_name}}</div>
+            <div class="col text-center pointer" ui-sref="tab.chemtest-detail({dataId: record.id})">
+              <div class="text-center" ng-class="{'balanced': record.result == 'Passed', 'assertive': record.result == 'Failed'}">{{record.result}}</div>
+            </div>
+          </div>
+          <i class="icon ion-chevron-right icon-accessory"></i>
+        </ion-item>
+      </ion-list>      
+    </div>
+
+
+  </ion-content>
+</ion-view>
+

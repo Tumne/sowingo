@@ -1,0 +1,28 @@
+<!--
+Create tabs with an icon and label, using the tabs-positive style.
+Each tab's child <ion-nav-view> directive will have its own
+navigation history that also transitions its views in and out.
+-->
+
+<ion-nav-bar class="bar-balanced border-bottom top-bar">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+</ion-nav-bar>
+
+<ion-tabs class="tabs-icon-left tabs-color-active-positive tabs-positive">
+
+
+  <!-- Biological Testing Tab -->
+  <!-- ui-sref="tab.biotests" -->
+  <ion-tab title="Biological Testing" icon-off="ion-ionic" icon-on="ion-ionic" ng-click="bioTest()">
+    <ion-nav-view name="tab-biotests"></ion-nav-view>
+  </ion-tab>
+
+
+  <!-- Chemical Testing Tab -->
+  <ion-tab title="Chemical Testing" icon-off="ion-beaker" icon-on="ion-beaker" ng-click="chemTest()">
+    <ion-nav-view name="tab-chemtests"></ion-nav-view>
+  </ion-tab>
+
+
+</ion-tabs>

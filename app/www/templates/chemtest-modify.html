@@ -1,0 +1,609 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view view-title="{{title}}">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left ion-location nav-button-height" ng-click="openModal()">
+        &nbsp;&nbsp;<b>{{currentAddress || 'No office provided'}}</b>
+      </button>
+
+      <button class="button button-positive nav-button-height" ng-click="logout()">
+          Sign Out
+      </button>
+  </ion-nav-buttons>
+  <ion-content class="padding height-header background-balanced">
+
+<div ng-show="isEmpty">
+<div class="row">
+    <div class="col col-33">
+        <div class="list list-inset background-balanced">
+          <label>Date <span class="assertive"><b>&#42;</b></span></label>
+          <label class="item item-input">
+            <input type="date" ng-model="record.test_date" ng-click="testDatePicker()">
+          </label>
+        </div>
+    </div>
+    <div class="col col-33">
+        <div class="list list-inset background-balanced" >
+          <label>Time <span class="assertive"><b>&#42;</b></span></label>
+          <label class="item item-input disabled" >
+            <input type="text" ng-model="record.test_time" disabled>
+          </label>
+        </div>
+    </div>
+    <div class="col col-33">
+        <!-- <div class="margin-top-10"></div> -->
+          <label>
+            Testing User <span class="assertive"><b>&#42;</b></span>
+          </label><br>
+<!--           <label class="item item-input">
+            <input type="text" ng-model="record.tester_id">
+          </label> -->
+
+          <select class="ion-input-select" ng-model="currentUser" ng-change="setCurrentUser(currentUser)" ng-options="user.fullname for user in users | filter:{is_active : true}">
+              <option selected value="">-- Select user --</option>
+          </select>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col col-33">
+          <div class="margin-top-10"></div>
+          <label>
+            Sterilizer <span class="assertive"><b>&#42;</b></span>
+          </label><br>
+          <select class="ion-input-select" ng-model="currentSterilizer" ng-change="setSterilizer(currentSterilizer)" ng-options="sterilizer.name for sterilizer in sterilizers">
+              <option value="">-- Select a sterilizer --</option>
+          </select>
+    </div>
+    <div class="col col-33 no-padding">
+      <div class="margin-top-10"></div>
+        <div class="row">
+            <div class="col col-50">
+                <button class="button button-calm button-block" ng-class="{'arrow_box_calm': editValue}" ng-click="editSterilizer()" ng-disabled="!currentSterilizer">Edit</button>
+            </div>
+            <div class="col col-50">
+                <button class="button button-balanced button-block " ng-class="{'arrow_box_green': newValue}" ng-click="newSterilizer()">New</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="row" ng-show="!value">
+    <div class="col col-33">
+          <label>
+            Sterilizer Preset <span class="assertive"><b>&#42;</b></span>
+          </label><br>
+          <select class="ion-input-select" ng-model="currentPreset" ng-change="setPreset(currentPreset)" ng-options="preset.name for preset in currentSterilizer.presets">
+              <option selected value="">-- Select a preset --</option>
+          </select>
+    </div>
+    <div class="col col-33">
+    </div>
+    <div class="col col-33"> 
+    </div>
+</div>
+
+
+<!-- EDIT -->
+
+<div ng-show="editValue" class="row">
+    <div class="col">
+      <div class="card card-grey">
+
+
+        <div class="row">
+          <div class="col col-33">
+            <label>Sterilizer Name <span class="assertive"><b>&#42;</b></span></label>
+            <div class="list list-inset list-border">
+              <label class="item item-input">
+                <input type="text" ng-model="sterilizerObject[sterilizerIndex].name">
+              </label>
+            </div>
+          </div>
+          <div class="col col-66"></div>
+        </div>
+        <div class="row" ng-repeat="preset in sterilizerObject[sterilizerIndex].presets">
+          <div class="col col-25">
+            <label>Cycle Name <span class="assertive"><b>&#42;</b></span></label>
+            <div class="list list-inset list-border">
+              <label class="item item-input">
+                <input type="text" ng-model="preset.name">
+              </label>
+            </div>
+          </div>
+          <div class="col col-75">
+            <div class="row no-padding no-vertical-padding">
+              <div class="col no-vertical-padding">
+                <label>Cycle Time (min) <span class="assertive"><b>&#42;</b></span></label>
+                <div class="list list-inset list-border">
+                  <label class="item item-input">
+                    <input type="text" ng-model="preset.cycle_time">
+                  </label>
+                </div>
+              </div>
+              <div class="col no-vertical-padding">
+                <label>Dry Time (min) <span class="assertive"><b>&#42;</b></span></label>
+                <div class="list list-inset list-border">
+                  <label class="item item-input">
+                    <input type="text" ng-model="preset.dry_time">
+                  </label>
+                </div>
+              </div>
+              <div class="col no-vertical-padding">
+                <label>Temperature (F) <span class="assertive"><b>&#42;</b></span></label>
+                <div class="list list-inset list-border">
+                  <label class="item item-input">
+                    <input type="text" ng-model="preset.temperature">
+                  </label>
+                </div>
+              </div>
+              <div class="col no-vertical-padding">
+                <label>Pressure (PSI) <span class="assertive"><b>&#42;</b></span></label>
+                <div class="list list-inset list-border">
+                  <label class="item item-input">
+                    <input type="text" ng-model="preset.pressure">
+                  </label>
+                </div>
+              </div>
+              <a href="" class="icon-padding" ng-click="removePreset(sterilizerObject[sterilizerIndex].presets,$index)"><i class="icon ion-close icon-accessory assertive"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <button class="button button-positive button-clear ion-plus-circled" style="padding:5px 20px !important" ng-click="addPreset(sterilizerObject[sterilizerIndex].presets)">&nbsp;&nbsp;Add another preset</button>
+        </div>
+        <div class="margin-10"></div>
+        <div class="row">
+          <div class="col col-25">
+            <a class="button button-positive button-block" ng-click="updateSterilizer()">&nbsp;&nbsp;Save Changes to Sterilizer</a>
+          </div>
+          <div class="col col-75">
+            <button class="button button-orange button-clear" style="padding:10px 20px !important" ng-click="deleteSterilizer(sterilizerObject[sterilizerIndex].id)">Delete</button>
+            <button class="button button-stable button-clear" style="padding:10px 20px !important" ng-click="editSterilizer()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<!-- ADD -->
+
+<div ng-show="newValue" class="row">
+    <div class="col">
+      <div class="card card-grey">
+
+
+        <div class="row">
+          <div class="col col-33">
+            <label>Sterilizer Name <span class="assertive"><b>&#42;</b></span></label>
+            <div class="list list-inset list-border">
+              <label class="item item-input">
+                <!-- ng-model="currentSterilizer.name" -->
+                {{newSterilizer}}
+                <input type="text" ng-model="emptySterilizer.name">
+              </label>
+            </div>
+          </div>
+          <div class="col col-66"></div>
+        </div>
+        <div class="row" ng-repeat="preset in emptySterilizer.presets">
+          <div class="col col-25">
+            <label>Cycle Name <span class="assertive"><b>&#42;</b></span></label>
+            <div class="list list-inset list-border">
+              <label class="item item-input">
+                <input type="text" ng-model="preset.name">
+              </label>
+            </div>
+          </div>
+          <div class="col col-75">
+            <div class="row no-padding no-vertical-padding">
+              <div class="col no-vertical-padding">
+                <label>Cycle Time (min) <span class="assertive"><b>&#42;</b></span></label>
+                <div class="list list-inset list-border">
+                  <label class="item item-input">
+                    <input type="text" ng-model="preset.cycle_time">
+                  </label>
+                </div>
+              </div>
+              <div class="col no-vertical-padding">
+                <label>Dry Time (min) <span class="assertive"><b>&#42;</b></span></label>
+                <div class="list list-inset list-border">
+                  <label class="item item-input">
+                    <input type="text" ng-model="preset.dry_time">
+                  </label>
+                </div>
+              </div>
+              <div class="col no-vertical-padding">
+                <label>Temperature (F) <span class="assertive"><b>&#42;</b></span></label>
+                <div class="list list-inset list-border">
+                  <label class="item item-input">
+                    <input type="text" ng-model="preset.temperature">
+                  </label>
+                </div>
+              </div>
+              <div class="col no-vertical-padding">
+                <label>Pressure (PSI) <span class="assertive"><b>&#42;</b></span></label>
+                <div class="list list-inset list-border">
+                  <label class="item item-input">
+                    <input type="text" ng-model="preset.pressure">
+                  </label>
+                </div>
+              </div>
+              <a href="" class="icon-padding" ng-click="removePreset(emptySterilizer.presets,$index)"><i class="icon ion-close icon-accessory assertive"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <button class="button button-positive button-clear ion-plus-circled" style="padding:5px 20px !important" ng-click="addPreset(emptySterilizer.presets)">&nbsp;&nbsp;Add another preset</button>
+        </div>
+        <div class="margin-10"></div>
+        <div class="row">
+          <div class="col col-25">
+            <a class="button button-positive button-block" ng-click="addSterilizer()">&nbsp;&nbsp;Create New Sterilizer</a>
+          </div>
+          <div class="col col-75">
+            <button class="button button-stable button-clear" style="padding:10px 20px !important" ng-click="newSterilizer()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="margin-top-10"></div>
+<div class="row">
+    <div class="col col-20"><strong>Types of Products</strong></div>
+    <div class="col col-20"></div>
+    <div class="col col-20"></div>
+    <div class="col col-20"> <strong>General Products</strong></div>
+    <div class="col col-20"></div>
+</div>
+<div class="row">
+    <div class="col col-20">
+        <li class="item item-checkbox">
+         <label class="checkbox">
+           <input type="checkbox" ng-model="record.checklist_general_products">
+         </label>
+         <small>
+            General Products
+         </small>
+        </li>
+    </div>
+    <div class="col col-20">
+        <li class="item item-checkbox">
+         <label class="checkbox">
+           <input type="checkbox" ng-model="record.checklist_implants">
+         </label>
+         <small>
+            Implants
+         </small>
+        </li>
+    </div>
+    <div class="col col-20">
+        <li class="item item-checkbox">
+         <label class="checkbox">
+           <input type="checkbox" ng-model="record.checklist_other">
+         </label>
+         <small>
+            Other (specify)
+         </small> 
+        </li>
+    </div>
+    <div class="col col-20">
+        <li class="item item-checkbox">
+         <label class="checkbox">
+           <input type="checkbox" ng-model="record.checklist_tape">
+         </label>
+         <small>
+            Tape
+         </small>
+        </li>
+    </div>
+    <div class="col col-20">
+        <li class="item item-checkbox">
+         <label class="checkbox">
+           <input type="checkbox" ng-model="record.checklist_strips">
+         </label>
+         <small>
+            Strip(s)
+         </small>
+        </li>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col"><strong>Contents of Autoclave</strong></div>
+</div>
+
+<div class="row">
+    <div class="col">
+      <label>
+        Pouches <span class="assertive"><b>&#42;</b></span>
+      </label><br>
+      <select class="ion-input-select" ng-model="record.pouches">
+          <option selected value="">-- Select number of pouches --</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>7</option>
+          <option>8</option>
+          <option>9</option>
+          <option>10</option>
+      </select>
+    </div>
+    <div class="col">
+      <label>
+        Wraps <span class="assertive"><b>&#42;</b></span>
+      </label><br>
+      <select class="ion-input-select" ng-model="record.wraps">
+          <option selected value="">-- Select number of wraps --</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>7</option>
+          <option>8</option>
+          <option>9</option>
+          <option>10</option>
+      </select>
+    </div>
+    <div class="col">
+      <label>
+        Cassettes <span class="assertive"><b>&#42;</b></span>
+      </label><br>
+      <select class="ion-input-select" ng-model="record.cassettes">
+          <option selected value="">-- Select number of cassettes --</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>7</option>
+          <option>8</option>
+          <option>9</option>
+          <option>10</option>
+      </select>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <label>
+        Notes 
+        </label><br>
+        <textarea rows="15" class="style-text-area" ng-model="record.notes"></textarea>
+    </div>
+</div>
+  <div style="margin-top:10px;"></div>
+  <div class="col"><strong>Choose Test Results</strong></div>
+
+  <div class="row">
+    <div class="col col-33">
+        <button class="button button-balanced button-full" ng-click="addRecord(true)">PASSED</button>
+    </div>
+    <div class="col col-33">
+        <button class="button button-assertive button-full" ng-click="addRecord(f)">FAILED</button>
+    </div>
+    <div class="col">
+        <button class="button button-positive button-clear" style="padding:10px 20px !important" ng-click="cancelRecord()">Cancel</button>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+
+
+<!-- Completed Record -->
+
+<div ng-show="!isEmpty">
+<div class="row">
+
+      <div class="col col-33">
+          <div class="list list-inset background-balanced">
+            <label>Date</label>
+            <label class="item item-input disabled">
+              <input type="text" ng-model="completedRecord.test_date" disabled="disabled">
+            </label>
+          </div>
+      </div>
+      <div class="col col-33">
+          <div class="list list-inset background-balanced" >
+            <label>Time</label>
+            <label class="item item-input disabled" >
+              <input type="text" ng-model="completedRecord.test_time" disabled>
+            </label>
+          </div>
+      </div>
+ 
+    <div class="col col-33">
+          <label>
+            Testing User</span>
+          </label><br>
+          <label class="item item-input disabled" >
+            <input type="text" ng-model="completedRecord.tester_name" disabled>
+          </label>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col col-33">
+          <div class="margin-top-10"></div>
+          <label>
+            Sterilizer
+          </label><br>
+          <label class="item item-input disabled" >
+            <input type="text" ng-model="completedRecord.sterilizer.name" disabled>
+          </label>
+    </div>
+    <div class="col col-33">
+                <div class="margin-top-10"></div>
+          <label>
+            Sterilizer Preset
+          </label><br>
+          <label class="item item-input disabled" >
+            <input type="text" ng-model="completedRecord.preset.name" disabled>
+          </label>
+    </div>
+    <div class="col col-33"> 
+    </div>
+</div>
+
+<div ng-show="true">
+  <div class="margin-top-10"></div>
+  <div class="row">
+      <div class="col col-33"><strong>Types of Products</strong></div>
+      <div class="col col-33"></div>
+      <div class="col col-33"></div>
+  <!--     <div class="col col-20"> <strong>General Products</strong></div>
+      <div class="col col-20"></div> -->
+  </div>
+  <div class="row">
+      <div class="col col-33" ng-show="completedRecord.checklist_general_products">
+        <label class="item item-input disabled">
+          <input type="text" value="General Products" disabled>
+        </label>
+      </div>
+      <div class="col col-33" ng-show="completedRecord.checklist_implants">
+        <label class="item item-input disabled" >
+          <input type="text" value="Implants" disabled>
+        </label>
+      </div>
+      <div class="col col-33" ng-show="completedRecord.checklist_other">
+        <label class="item item-input disabled" >
+          <input type="text" value="Others ( see Notes )" disabled>
+        </label>
+      </div>
+  </div>
+</div>
+
+
+<div ng-show="true">
+  <div class="margin-top-10"></div>
+
+  <div class="row">
+      <div class="col col-33"> <strong>General Products</strong></div>
+      <div class="col col-33"></div>
+  </div>
+
+  <div class="row">
+      <div class="col col-33" ng-show="completedRecord.checklist_tape">
+        <label class="item item-input disabled" >
+          <input type="text" value="Tape" disabled>
+        </label>
+      </div>
+      <div class="col col-33" ng-show="completedRecord.checklist_strips">
+        <label class="item item-input disabled" >
+          <input type="text" value="Strip(s)" disabled>
+        </label>
+      </div>
+      <div class="col col-33"></div>
+  </div>
+</div>
+
+<div class="margin-top-10"></div>
+
+<div class="row">
+    <div class="col"><strong>Contents of Autoclave</strong></div>
+</div>
+
+<div class="row">
+    <div class="col">
+      <label>
+        Pouches
+      </label><br>
+      <label class="item item-input disabled" >
+        <input type="text" ng-model="completedRecord.pouches" disabled>
+      </label>
+    </div>
+    <div class="col">
+      <label>
+        Wraps
+      </label><br>
+      <label class="item item-input disabled" >
+        <input type="text" ng-model="completedRecord.wraps" disabled>
+      </label>
+    </div>
+    <div class="col">
+      <label>
+        Cassettes
+      </label><br>
+      <label class="item item-input disabled" >
+        <input type="text" ng-model="completedRecord.cassettes" disabled>
+      </label>
+    </div>
+</div>
+
+
+
+
+
+<div style="margin-top:10px;"></div>
+
+    <div class="col"><strong><span ng-show="completedRecord.result == 'Record Result'">Choose</span>Test Results</strong></div>
+
+<div style="margin-top:10px;"></div>
+
+<div class="row">
+  <div class="col col-33">
+    <div ng-show="completedRecord.result == 'Record Result'">
+      <button class="button button-balanced button-full" ng-click="setResult(true)">PASSED</button>
+    </div>
+    <div ng-show="completedRecord.result != 'Record Result'">
+    <label class="item item-input disabled">
+      <input type="text" ng-model="completedRecord.result" ng-click="setResult(false)" ng-class="{'font-balanced': completedRecord.result == 'Passed', 'font-assertive': completedRecord.result == 'Failed'}" disabled>
+    </label>
+    </div>
+  </div>
+  <div class="col col-33" ng-show="completedRecord.result == 'Record Result'">
+      <button class="button button-assertive button-full">FAILED</button>
+  </div>
+  <div class="col">
+
+  </div>
+</div>
+
+<div style="margin-top:10px;"></div>
+
+<div class="row">
+    <div class="col">
+        <label>
+        Notes 
+        </label><br>
+        <textarea rows="15" class="style-text-area" ng-model="completedRecord.notes"></textarea>
+    </div>
+</div>
+        <div class="row">
+          <div class="col col-20">
+            <button class="button button-positive button-block" ng-click="updateNote()">Update Notes</button>
+          </div>
+          <div class="col">
+          </div>
+        </div>
+
+
+</div>
+
+
+  </ion-content>
+
+</ion-view>

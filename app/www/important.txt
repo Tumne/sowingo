@@ -1,0 +1,88 @@
+Necessary INFO
+
+"apiUrl": "https://api.sowingo.com:443",
+"apiKey": "77dc92d4-2368-498b-a8a2-cb359e637f5b",
+"apiSecret": "571c91e3c18b45178df98a32",
+
+
+API
+
+
+
+
+Endpoints:
+
+
+Update Notes on a record: PUT /sterilization/record/<record_id>/notes
+
+Get list of biological indicator companies: GET /sterilization/indicator_companies
+
+Fetch list of sterilization records: GET /sterilization
+Fetch list of sterilizers: GET /sterilization/sterilizers
+
+Delete a sterilizer: DELETE /sterilization/sterilizers/<sterilizer_id>
+Update a sterilizer: PUT /sterilization/sterilizers/<sterilizer_id>
+Create a sterilizer: POST /sterilization/sterilizers
+
+Update a sterilization record: PUT /sterilization/<record_id>
+Create a sterilization record: POST /sterilization
+
+GET /me/users
+
+
+Arguments for creating/updating sterilization records:
+
+        self.add_json_arg("created_at", type=unicode, required=False)
+        self.add_json_arg("created_at_formatted", type=unicode, required=False)
+        self.add_json_arg("test_date", type=unicode, required=False)
+        self.add_json_arg("test_time", type=unicode, required=False)
+        self.add_json_arg("type", type=unicode, required=True)
+        self.add_json_arg("result", type=unicode, required=False)
+        self.add_json_arg("sterilizer_preset", type=unicode, required=False)
+        self.add_json_arg("tester_id", type=unicode, required=False)
+        self.add_json_arg("cycle_time", type=unicode, required=False)
+        self.add_json_arg("temperature", type=unicode, required=False)
+        self.add_json_arg("pressure", type=unicode, required=False)
+        self.add_json_arg('notes', type=unicode, required=False)
+
+        # bio_test - specific fields
+        self.add_json_arg("recorder_id", type=unicode, required=False)
+        self.add_json_arg("biological_indicator_id", type=unicode,
+                          required=False)
+        self.add_json_arg("indicatorCompany", type=unicode, required=False)
+        self.add_json_arg("incubator_time", type=unicode, required=False)
+
+        # chem_test - specific fields
+        self.add_json_arg("pouches", type=unicode, required=False)
+        self.add_json_arg("wraps", type=unicode, required=False)
+        self.add_json_arg("cassettes", type=unicode, required=False)
+
+        self.add_json_arg("checklist_tape", type=bool, required=False)
+        self.add_json_arg("checklist_general_products", type=bool, required=False)
+        self.add_json_arg("checklist_strips", type=bool, required=False)
+        self.add_json_arg("checklist_other", type=bool, required=False)
+        self.add_json_arg("checklist_implants", type=bool, required=False)
+
+Arguments for creating a sterilizer:
+
+        self.add_json_arg('name', type=unicode, required=True)
+        self.add_json_arg('presets', type=list, required=True)
+
+Arguments for updating a sterilizer:
+
+        self.add_json_arg('id', type=unicode, required=True)
+        self.add_json_arg('name', type=unicode, required=True)
+        self.add_json_arg('presets', type=list, required=True)
+
+Format for “presets” list:
+
+{id: 1, name: “blah”, dry_time: 0, cycle_time: 0, temperature: 0.00, pressure: 0}
+
+(No id for new presets)
+
+Arguments for updating record notes:
+
+        self.add_json_arg('notes', type=unicode, required=True)
+
+        {"notes"; "string"}
+

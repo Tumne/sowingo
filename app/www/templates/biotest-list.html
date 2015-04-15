@@ -1,0 +1,70 @@
+<ion-view view-title="Sterilization Compliance: Biological Testing">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left ion-location nav-button-height" ng-click="openModal()">
+        
+        &nbsp;&nbsp;<b>{{currentAddress || 'No office provided'}}</b>
+      </button>
+
+      <button class="button button-positive nav-button-height" ng-click="logout()">
+          Sign Out
+      </button>
+  </ion-nav-buttons>
+  <ion-content class="height-header background-balanced">
+    <toaster-container></toaster-container>
+    <div class="row">
+      <div class="col col-50">
+        <!-- ui-sref="tab.biotest-detail({dataId:''})" -->
+        <button class="button button-calm icon-left ion-plus-circled" ng-click="addRecord()">
+              &nbsp;&nbsp;Add Biological Test
+        </button>
+      </div>
+    </div>
+        <!-- <button ng-click="pop()">Show a Toaster</button> -->
+
+
+    <div class="list card">
+      <ion-list>
+        <ion-item class="item-remove-animate item-avatar item-icon-right item-header">
+          <div class="row">
+            <div class="col text-center"><a ng-click="reorder('test_date')" class="pointer">Date/Time
+              <span ng-show="(predicate=='test_date' && reverse)"><i class="ion-arrow-down-b"></i></span>
+              <span ng-show="(predicate=='test_date' && !reverse)"><i class="ion-arrow-up-b"></i></span>
+            </a></div>
+            <div class="col text-center"><a ng-click="reorder('tester_name')" class="pointer">Tester
+              <span ng-show="(predicate=='tester_name' && reverse)"><i class="ion-arrow-down-b"></i></span>
+              <span ng-show="(predicate=='tester_name' && !reverse)"><i class="ion-arrow-up-b"></i></span>
+            </a></div>
+            <div class="col text-center"><a ng-click="reorder('result')" class="pointer">Result
+              <span ng-show="(predicate=='result' && reverse)"><i class="ion-arrow-down-b"></i></span>
+              <span ng-show="(predicate=='result' && !reverse)"><i class="ion-arrow-up-b"></i></span>
+            </a></div>
+          </div>
+        </ion-item>
+
+        <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="record in records | orderBy:predicate:reverse | filter:{type:'bio_test'}" type="item-text-wrap" style="z-index:0">
+          <div class="row" >
+            <div class="col text-center pointer" ui-sref="tab.biotest-detail({dataId: record.id})">{{record.test_date}}&nbsp;&nbsp;&nbsp;{{record.test_time}}</div>
+            <div class="col text-center pointer" ui-sref="tab.biotest-detail({dataId: record.id})">{{record.tester_name}}</div>
+            <div class="col text-center" ng-show="record.result == 'Record Result'" >
+                  <button class="passed-button" ng-click="setResult(true, record)">
+                      PASSED
+                  </button>
+                  <button class="failed-button" ng-click="setResult(false, record)">
+                      FAILED
+                  </button>
+            </div>
+            <div class="col text-center pointer" ui-sref="tab.biotest-detail({dataId: record.id})" ng-show="record.result != 'Record Result'">
+              <div class="text-center" ng-class="{'balanced': record.result == 'Passed', 'assertive': record.result == 'Failed'}">{{record.result}}</div>
+            </div>
+          </div>
+          <a ui-sref="tab.biotest-detail({dataId: record.id})"><i class="icon ion-chevron-right icon-accessory"></i></a>
+        </ion-item>
+      </ion-list>      
+    </div>
+
+  </ion-content>
+
+
+</ion-view>
+
+

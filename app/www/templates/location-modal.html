@@ -1,0 +1,35 @@
+  <ion-modal-view>
+    <ion-header-bar class="bar-balanced">
+      <h1 class="title">Select a Location!</h1>
+    </ion-header-bar>
+    <ion-content class="background-balanced">
+      <div class="list">
+
+    <div class="row padding-location">
+      <div class="col-25">
+      </div>
+      <div class="col-50">
+        <div class="list">
+          <a class="item item-icon-left item-icon-right office" href="#" ng-repeat="(index,user) in userInfo.memberships.office" ng-click="choose(index)">
+            <i class="icon ion-briefcase"></i>
+            <b>{{user.office.name}}</b><br>
+            <small>{{user.office.address.address1 || 'No Address'}}</small>
+            <i ng-show="index == officeValue" class="icon ion-checkmark-circled"></i>        
+          </a>
+        </div>
+
+      </div>
+      <div class="col-25">
+      </div>
+    </div>
+</div>
+    </ion-content>
+    <ion-footer-bar align-title="center" class="bar-positive">
+        <div class="right-side">
+          <button class="button button-outline button-light padding-button" ng-click="cancelModal()">Cancel</button>
+        </div>
+
+
+    </ion-footer-bar>
+
+  </ion-modal-view>

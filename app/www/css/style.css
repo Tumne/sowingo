@@ -1,0 +1,361 @@
+/* Empty. Add your own CSS if you like */
+
+.hero{
+  //* IE10 Consumer Preview */ 
+  background-image: -ms-radial-gradient(center, circle farthest-corner, #FFFFFF 0%, #B8EFC7 100%);
+
+  /* Mozilla Firefox */ 
+  background-image: -moz-radial-gradient(center, circle farthest-corner, #FFFFFF 0%, #B8EFC7 100%);
+
+  /* Opera */ 
+  background-image: -o-radial-gradient(center, circle farthest-corner, #FFFFFF 0%, #B8EFC7 100%);
+
+  /* Webkit (Safari/Chrome 10) */ 
+  background-image: -webkit-gradient(radial, center center, 0, center center, 497, color-stop(0, #FFFFFF), color-stop(1, #B8EFC7));
+
+  /* Webkit (Chrome 11+) */ 
+  background-image: -webkit-radial-gradient(center, circle farthest-corner, #FFFFFF 0%, #B8EFC7 100%);
+
+  /* W3C Markup, IE10 Release Preview */ 
+  background-image: radial-gradient(circle farthest-corner at center, #FFFFFF 0%, #B8EFC7 100%);
+  background-repeat: none;
+  background-attachment: scroll;
+  background-position: center center;
+}
+
+.background-balanced, .background-balanced h4{
+  background: #EEFFF1 !important;
+  color: rgb(0, 81, 0) !important;
+}
+
+.background-white{
+  background: white;
+}
+
+.logo{
+  height:58px;
+  background: url("../img/sowingo-small.png") no-repeat;
+  background-repeat: none;
+  background-attachment: scroll;
+  background-position: center center;
+}
+
+.logo img{
+  width:100%;
+}
+
+img.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.text-center{
+    text-align: center;
+}
+
+.item-header{
+    font-weight: bold;
+    background: #f8f8f8;
+}
+
+.card-grey{
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    box-shadow: none;
+}
+
+.list-border{
+    border: 1px solid #ddd;
+}
+
+.ion-input-select--large,
+.ion-input-select,
+select {
+  -webkit-appearance:none;
+  background-repeat: no-repeat;
+  background-color: rgba(0,0,0,0);  
+  border:thin solid #dddddd;
+  font-weight:300;
+  display:inline;
+  vertical-align:middle;
+  color:#333;
+  padding: auto 0;
+  overflow:hidden;
+  box-sizing:border-box;
+
+}
+
+.ion-input-select--large {
+  width:420px;
+  font-size:1.6rem;
+  background-image: url(http://i.imgur.com/7rGM4IX.png);
+  text-indent:40px;
+  padding:1.2rem 0;
+}
+
+.ion-input-select {
+  width:100%;
+  font-size:1rem;
+  background-image: url(http://i.imgur.com/nA9xx1X.png);
+  background-color: white;
+  background-position: right center;
+  text-indent:20px;
+  padding:.75rem 0;
+}
+
+option {
+  background:#444;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+:focus {
+  outline:none;
+}
+
+.margin-top-10{
+  margin-top:10px;
+}
+
+.no-padding{
+  padding-left:0;
+  padding-right:0;
+}
+
+.no-vertical-padding{
+  padding-top:0;
+  padding-bottom:0;
+}
+
+.style-text-area {
+  border: 1px solid #ddd;
+  padding: 5px;
+  resize: none;
+}
+
+
+
+/* Style Hacks */
+
+.card, .list-inset{
+  margin-top:0 !important;
+  margin-bottom:0 !important;
+}
+
+.right-side{
+  position: absolute;
+  right:5px;
+}
+
+.center-side{
+  margin:0 auto;
+}
+
+.padding-button{
+  padding:0 10px !important;
+}
+.item-border-right{
+  border-right: 2px solid #ddd;
+}
+
+.icon-padding{
+  padding:35px 10px 0 10px;
+}
+
+.button-orange{
+  color: #C59F11 !important;
+} 
+
+.tab-title{
+  font-size:16px;
+}
+
+.tab-item{
+  margin-left:15px;
+  margin-right:15px;
+}
+
+.padding-middle{
+  padding-top: 20%;
+}
+
+.padding-location{
+  padding-top: 15%;
+}
+
+.border-bottom{
+  border-bottom:1px solid #ddd !important;
+}
+
+/* option styles */
+
+.option-positive{
+  background:#66cc33 !important;
+  color: white;
+}
+
+.option-assertive{
+  background:#ef4e3a !important;
+  color: white;
+}
+
+.item-radio input:checked ~ .radio-icon {
+  color:white;
+}
+
+/* mini button css */
+
+.input-flex{
+  flex: 0 0 200px !important;
+}
+.passed-button{
+  background: #33cd5f;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding:5px;
+}
+.failed-button{
+  background: #ef473a;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding:5px;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+.disabled{
+  background: #F9F9F9 !important;
+}
+
+input[disabled], select[disabled], textarea[disabled], input[readonly]:not(.cloned-text-input), textarea[readonly]:not(.cloned-text-input), select[readonly]{
+  background: #F9F9F9 !important;  
+  color: black !important;
+}
+
+.font-balanced{
+  color:green !important;
+}
+
+.font-assertive{
+  color:red !important;
+}
+
+.arrow_box_green {
+  position: relative;
+  background: #33cd5f;
+  border: 1px solid #28a54c;
+}
+.arrow_box_green:after, .arrow_box:before {
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.arrow_box_green:after {
+  border-color: rgba(51, 205, 95, 0);
+  border-top-color: #33cd5f;
+  border-width: 10px;
+  margin-left: -10px;
+}
+.arrow_box_green:before {
+  border-color: rgba(40, 165, 76, 0);
+  border-top-color: #28a54c;
+  border-width: 11px;
+  margin-left: -11px;
+}
+
+.arrow_box_calm {
+  position: relative;
+  background: #11c1f3;
+  border: 1px solid #0a9ec7;
+}
+.arrow_box_calm:after, .arrow_box:before {
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.arrow_box_calm:after {
+  border-color: rgba(51, 205, 95, 0);
+  border-top-color: #11c1f3;
+  border-width: 10px;
+  margin-left: -10px;
+}
+.arrow_box_calm:before {
+  border-color: rgba(40, 165, 76, 0);
+  border-top-color: #0a9ec7;
+  border-width: 11px;
+  margin-left: -11px;
+}
+
+/*.top-bar .bar{
+  height: 80px;
+}
+
+.height-header{
+  top: 80px;
+}
+
+.nav-button-height{
+  height: 67px;
+}*/
+
+.office{
+  margin-bottom:10px;
+  background:#f8f8f8;
+}
+
+.office:hover{
+    border: 1px solid rgb(51, 205, 95);
+  background:lightgreen;
+}
+
+ion-tabs.tabs-color-active-positive .tab-item.tab-item-active, ion-tabs.tabs-color-active-positive .tab-item.active, ion-tabs.tabs-color-active-positive .tab-item.activated {
+  color: white;
+}
+
+ion-tabs.tabs-color-active-positive .tab-item {
+  color: white;
+}
+
+
+@media only screen and (device-width: 768px) and (orientation: portrait){
+  /* For general iPad layouts */
+
+  .logo{
+    height:58px;
+    background: url("../img/sowingo-small.png") no-repeat;
+    background-repeat: none;
+    background-attachment: scroll;
+    background-position: center center;
+  }
+  .padding-middle{
+    padding-top: 45%;
+  }
+  .padding-location{
+    padding-top: 40%;
+}
+
+}
+
+/*.bar.bar-stable .title{
+  top: 10px;
+}*/
